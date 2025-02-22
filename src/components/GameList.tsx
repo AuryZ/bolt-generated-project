@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { Icon } from './Icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { IoHeart, IoHeartOutline, IoRefresh, IoLogoSteam } from 'react-icons/io5';
+import { IoHeart, IoHeartOutline, IoRefresh, IoLogoSteam, IoArrowBack, IoArrowForward } from 'react-icons/io5';
 import Gallery from './Gallery';
+import { View, TouchableOpacity } from 'react-native';
 
 export default function GameList() {
   const location = useLocation();
@@ -141,6 +142,11 @@ export default function GameList() {
 
       {/* Top controls */}
       <div className="top-controls">
+        {currentGame.steam_page && (
+          <button className="control-button" onClick={handleSteamClick}>
+            <IoLogoSteam size={24} color="#fff" />
+          </button>
+        )}
         <button 
           className={`control-button ${isRefreshing ? 'refreshing' : ''}`} 
           onClick={handleRefresh}
@@ -168,35 +174,37 @@ export default function GameList() {
             <IoHeartOutline size={24} color="#fff" />
           )}
         </button>
-        {currentGame.steam_page && (
-          <button className="control-button" onClick={handleSteamClick}>
-            <IoLogoSteam size={24} color="#fff" />
-          </button>
-        )}
       </div>
 
+      <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: 50, justifyContent: 'center', alignItems: 'center', zIndex: 100 }}>
+        <TouchableOpacity onPress={handlePrevious}>
+          <IoArrowBack size={30} color="white" />
+        </TouchableOpacity>
+      </View>
+      <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: 50, justifyContent: 'center', alignItems: 'center', zIndex: 100 }}>
+        <TouchableOpacity onPress={handleNext}>
+          <IoArrowForward size={30} color="white" />
+        </TouchableOpacity>
+      </View>
       {/* Bottom info bar */}
       <div className="bottom-info" onClick={handleGameClick}>
         <div className="game-info">
           <h1 className="game-title">{currentGame.name}</h1>
-          <div className="game-meta">
-            <div className="game-genres">
-              {currentGame.genres?.map((genre, index) => (
-                <span key={genre.id} className="game-genre">
-                  {index > 0 && " • "}
-                  {genre.description}
-                </span>
-              ))}
+          <div className="game-genres">
+              {currentGame.genres?.map((genre, index) => (<span key={genre.id} className="game-genre">{index > 0 && " • "}{genre.description}</span>))}
             </div>
+          <div className="game-meta">
           </div>
         </div>
-        <button 
-          className="favorites-link"
-          onClick={handleFavoritesClick}
-        >
-          <IoHeart size={20} />
-          <span>Favorites</span>
-        </button>
+        <div className="bottom-info-right">
+          <button 
+            className="favorites-link"
+            onClick={handleFavoritesClick}
+          >
+            <IoHeart size={20} />
+            <span>Favorites</span>
+          </button>
+        </div>
       </div>
     </div>
   );
