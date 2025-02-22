@@ -65,38 +65,50 @@ html, body, #root {
   z-index: 1;
 }
 
+/* 
+   CHANGED: Now we make .gallery-media-wrapper overflow hidden 
+   and position: relative for the absolute-positioned .gallery-media 
+*/
 .gallery-media-wrapper {
+  position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 }
 
+/* 
+   CHANGED: Absolutely position the media, center it with translate,
+   scale it a bit (1.1), and use object-fit: contain 
+*/
 .gallery-media {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
   width: auto;
-  height: 100%;
+  height: auto;
   min-width: 100%;
+  min-height: 100%;
   object-fit: contain;
   pointer-events: none;
 }
 
 .gallery-indicators {
   position: absolute;
-  bottom: 10px;
+  bottom: 160px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 12px 12px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 16px;
-  z-index: 5;
+  z-index: 11;
 }
 
 .gallery-indicator {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
   cursor: pointer;
@@ -110,8 +122,8 @@ html, body, #root {
 
 .gallery-indicator.active {
   background: #66c0f4;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 /* Top controls */
@@ -201,7 +213,7 @@ html, body, #root {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: auto;
+  width: 100%;
   background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 60%, transparent 100%);
   padding-right: 20px;
   padding: 20px;
@@ -209,7 +221,7 @@ html, body, #root {
   align-items: center;
   z-index: 10;
   cursor: pointer;
-  height: 120px;
+  height: 100px;
   transition: background-color 0.2s;
 }
 
@@ -482,8 +494,8 @@ html, body, #root {
   }
 
   .gallery-center-area {
-    left: 10%;
-    right: 10%;
+    /*left: 10%;*/
+    /*right: 10%;*/
     top: 50px;
     bottom: 100px;
   }
@@ -522,7 +534,7 @@ html, body, #root {
 /* Large screens */
 @media (min-width: 1440px) {
   .gallery-center-area {
-    left: 15%;
-    right: 15%;
+    /*left: 15%;*/
+    /*right: 15%;*/
   }
 }
